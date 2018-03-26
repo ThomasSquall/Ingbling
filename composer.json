@@ -1,0 +1,19 @@
+{
+    "name": "thomas-squall/ingbling",
+    "description": "Ingbling SaaS",
+    "minimum-stability": "stable",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "thomas",
+            "email": "thomas.cocchiara@gmail.com"
+        }
+    ],
+    "require": {
+        "thomas-squall/php-magic-annotations": "^0.5.1",
+        "thomas-squall/php7-mongo-driver": "^0.5.0",
+        "thomas-squall/php-easy-api": "dev-master",
+        "facebook/graph-sdk": "^5.6"
+    }
+}
