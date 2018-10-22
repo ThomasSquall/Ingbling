@@ -5,7 +5,7 @@ Differently from the other MVC frameworks it relies on MongoDB instead of MySQL.
 
 ## Installation
 
-Download or clone the repository and then start personalizing.
+Download or clone the repository and then start personalize.
 
 ## Prerequisites
 
