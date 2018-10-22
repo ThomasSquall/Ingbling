@@ -133,9 +133,9 @@ function login()
         $user,
         new MongoDriver\Filter
         (
-            'username',
-            '<your_username>',
-            \MongoDriver\Filter::IS_EQUAL
+            'username', // User field name to compare
+            '<your_username>', // username value to find
+            \MongoDriver\Filter::IS_EQUAL // comparison operator to use
         )
     );
     
