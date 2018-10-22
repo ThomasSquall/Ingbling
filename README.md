@@ -41,7 +41,7 @@ $ composer install
 
 You essentially will work in the app folder.
 This folder is divided in 4 important sub-folders:
-- assets folder: This folder contains js, css & img folders by default which are used by the core to find Javascripts, CSS and Images file.
+- assets folder: This folder contains js, css & img folders by default which are used by the core to find Javascripts, CSS and Images files.
 - collections folder: This folder contains all your Mongo models/collections.
 - controllers folder: This folder contains all your Controllers, one per page.
 - templates folder: This folder contains all your templates.
