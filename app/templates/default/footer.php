@@ -1,1 +1,1 @@
-FOOTER
+<div>Created by NTWalkers.it</div>

@@ -21,19 +21,49 @@ class Database
         $this->init();
     }
 
-    private function init() { }
+    private function init()
+    {
+        foreach (glob(APP_DIR . "collections/*.php") as $file)
+        {
+            require_once $file;
 
-    public function insert($model)
+            $files = explode('/', $file);
+            $model = explode(".php", $files[count($files) - 1])[0];
+            $this->adapter->registerModel(new $model());
+        }
+    }
+
+    private function getCollection($model)
     {
         $reflector = new \PHPAnnotations\Reflection\Reflector($model);
         $collection = $reflector->getClass()->getAnnotation('\MongoDriver\Models\Model')->name;
-        $this->adapter->insert($collection, $model);
+
+        return $collection;
+    }
+
+    public function insert($model)
+    {
+        $collection = $this->getCollection($model);
+        return $this->adapter->insert($collection, $model);
+    }
+
+    public function update($search, $update)
+    {
+        $collection = $this->getCollection($search);
+        $this->adapter->update($collection, $search, $update);
     }
 
     public function findOne(&$model, $filters = [], $options = [])
     {
-        $reflector = new \PHPAnnotations\Reflection\Reflector($model);
-        $collection = $reflector->getClass()->getAnnotation('\MongoDriver\Models\Model')->name;
+        $collection = $this->getCollection($model);
         $model = $this->adapter->findOne($collection, $filters, $options)[0];
+    }
+
+    public function find($class, $filters = [], $options = [])
+    {
+        $collection = $this->getCollection($class);
+        $models = $this->adapter->find($collection, $filters, $options);
+
+        return $models;
     }
 }

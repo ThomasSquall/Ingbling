@@ -1,6 +1,6 @@
 {
     "name": "thomas-squall/ingbling",
-    "description": "Ingbling SaaS",
+    "description": "Ingbling, site builder",
     "minimum-stability": "stable",
     "type": "project",
     "license": "MIT",
@@ -11,9 +11,7 @@
         }
     ],
     "require": {
-        "thomas-squall/php-magic-annotations": "^0.5.1",
-        "thomas-squall/php7-mongo-driver": "^0.5.0",
-        "thomas-squall/php-easy-api": "dev-master",
-        "facebook/graph-sdk": "^5.6"
+        "thomas-squall/php-easy-api": "^0.3.6",
+        "thomas-squall/php7-mongo-driver": "^0.6.2"
     }
 }

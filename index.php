@@ -5,27 +5,30 @@ use PHPEasyAPI\Resolver;
 
 session_start();
 
-$resolver = new Resolver();
 $database = new Database();
+$resolver = new Resolver();
 
 $resolver->setBaseUrl(BASE_URL);
-$resolver->bindListener('', new HomeController());
-$resolver->bindListener('login', new LoginController());
-$resolver->bindListener('logout', new LogoutController());
+
+foreach (glob(APP_DIR . "controllers/*Controller.php") as $file)
+{
+    $files = explode('/', $file);
+    $controller = explode(".php", $files[count($files) - 1])[0];
+    $resolver->bindListener(new $controller());
+}
 
 $resolver->resolve
 (
     $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
-
     function ($endpoint)
     {
         switch ($endpoint)
         {
-            case 'register':
             case 'login':
+            case 'register':
                 if (isset($_SESSION['username']))
                 {
-                    header("Location: " . APP_URL);
+                    header("Location: " . BASE_URL);
                     exit();
                 }
 
@@ -33,7 +36,7 @@ $resolver->resolve
             default:
                 if (!isset($_SESSION['username']))
                 {
-                    header("Location: " . APP_URL . "login");
+                    header("Location: " . BASE_URL . "login");
                     exit();
                 }
 

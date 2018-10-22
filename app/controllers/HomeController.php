@@ -9,7 +9,7 @@ class HomeController extends ControllerBase
     /**
      * HomeController constructor.
      */
-    public function __construct() { }
+    public function init() { $this->Title = "Home"; }
 
     /**
      * [\PHPEasyAPI\Enrichment\Endpoint(method = "GET", url = "")]
