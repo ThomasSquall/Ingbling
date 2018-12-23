@@ -1,7 +1,6 @@
 <?php
 
-define("BASE_URL", "/ingbling/");
-define("APP_URL", "http://localhost" . BASE_URL . "app/");
+define("BASE_URL", "http://localhost/ingbling/");
 
 define("PROJECT_DIR", dirname(__FILE__) . '/');
 define("APP_DIR", PROJECT_DIR . 'app/');

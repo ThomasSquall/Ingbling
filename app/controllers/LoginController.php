@@ -32,7 +32,7 @@ class LoginController extends ControllerBase
             (
                 'username',
                 $_POST['username'],
-                \MongoDriver\Filter::IS_EQUAL
+                MongoDriver\Filter::IS_EQUAL
             )
         );
 
