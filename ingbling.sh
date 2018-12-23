@@ -25,7 +25,7 @@ function install-repo {
     git clone "$repo" "$dir$name"
     cd "$name"
     rm -rf .git
-    rm ingbling.sh
+    rm -f ingbling.sh
 }
 
 function install-dependencies {
@@ -42,7 +42,7 @@ function create-config {
     echo "  \"settings\": {" >> "$file"
     echo "    \"basedir\": \"$3\"," >> "$file"
     echo "    \"url\": \"$4\"," >> "$file"
-    echo "    \"errors\": false," >> "$file"
+    echo "    \"errors\": false" >> "$file"
     echo "  }," >> "$file"
     echo "  \"db\": {" >> "$file"
     echo "    \"host\": \"$5\"," >> "$file"
@@ -53,17 +53,15 @@ function create-config {
     echo "  }" >> "$file"
     echo "}" >> "$file"
 
-    cp config-sample.php config.php
-
     mv .htaccess-sample .htaccess
     sed -i "s@ingbling@$1@" .htaccess
-    cp .htaccess .htaccess-sample
+    rm -f .htaccess-sample
 }
 
 function basedir-config {
     basedir="$1"
 
-    if [[ "" != "$basedir" ]]; then
+    if [[ "app" != "$basedir" && "app/" != "$basedir" ]]; then
         mkdir "$basedir"
         mv app/* "$basedir"/
         rm -rf app/
@@ -102,7 +100,17 @@ function init {
     done;
 
     read -p "Database host (localhost): " db_host
+
+    if [[ "" = "$db_host" ]]; then
+        db_host="localhost"
+    fi;
+
     read -p "Database port (27017): " db_port
+
+    if [[ "" = "$db_port" ]]; then
+        db_port="27017"
+    fi;
+
     read -p "Database name ($name): " db_name
 
     if [[ "" = "$db_name" ]]; then
