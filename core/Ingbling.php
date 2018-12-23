@@ -46,12 +46,18 @@ class Ingbling
 
         $connectionString .= DBHOST . ":" . DBPORT . DBLOGIN . DBOPTIONS;
 
+        $url = $this->loadedSettings["url"];
+        $basedir = $this->loadedSettings["basedir"];
+
+        if (!ends_with($url, "/")) $url .= "/";
+        if (!ends_with($basedir, "/")) $basedir .= "/";
+
         define("CONNECTION_STRING", $connectionString);
-        define("BASE_URL", $this->loadedSettings["url"]);
-        define("APP_URL", BASE_URL . $this->loadedSettings["basedir"]);
+        define("BASE_URL", $url);
+        define("APP_URL", BASE_URL . $basedir);
 
         define("PROJECT_DIR", dirname(__FILE__) . "/../");
-        define("APP_DIR", PROJECT_DIR . $this->loadedSettings["basedir"] . "/");
+        define("APP_DIR", PROJECT_DIR . $basedir);
         define("CORE_DIR", PROJECT_DIR . "core/");
     }
 }
