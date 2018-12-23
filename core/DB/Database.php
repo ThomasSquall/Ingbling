@@ -1,5 +1,7 @@
 <?php
 
+namespace Ingbling\DB;
+
 use MongoDriver\Adapter;
 
 class Database

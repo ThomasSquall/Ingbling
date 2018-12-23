@@ -4,7 +4,7 @@
  * Class HomeController.
  * [\PHPEasyAPI\Server]
  */
-class HomeController extends ControllerBase
+class HomeController extends Ingbling\MVC\ControllerBase
 {
     /**
      * HomeController constructor.

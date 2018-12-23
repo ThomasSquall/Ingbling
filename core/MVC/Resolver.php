@@ -1,5 +1,7 @@
 <?php
 
+namespace Ingbling\MVC;
+
 class Resolver
 {
     /**

@@ -1,5 +1,7 @@
 <?php
 
+namespace Ingbling\MVC;
+
 abstract class ControllerBase
 {
     protected $Title;

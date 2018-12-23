@@ -4,7 +4,7 @@
  * Class LogoutController.
  * [\PHPEasyAPI\Server("logout")]
  */
-class LogoutController extends ControllerBase
+class LogoutController extends Ingbling\MVC\ControllerBase
 {
     /**
      * [\PHPEasyAPI\Enrichment\Endpoint(method = "GET", url = "")]

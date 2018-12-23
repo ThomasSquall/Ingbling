@@ -4,7 +4,7 @@
  * Class LoginController.
  * [\PHPEasyAPI\Server("login")]
  */
-class LoginController extends ControllerBase
+class LoginController extends Ingbling\MVC\ControllerBase
 {
     /**
      * HomeController constructor.

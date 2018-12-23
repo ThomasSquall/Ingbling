@@ -22,7 +22,9 @@ class Ingbling
         $content = file_get_contents("ingbling.json");
         $content = json_decode($content, true);
 
-        $this->loadedSettings = parse_args($content, $this->defaults);
+        $content = parse_args($content, $this->defaults);
+        $this->loadedSettings = $content["settings"];
+
         unset($this->defaults);
         unset($content);
     }

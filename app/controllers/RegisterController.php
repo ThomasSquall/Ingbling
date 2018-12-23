@@ -4,7 +4,7 @@
  * Class RegisterController.
  * [\PHPEasyAPI\Server("register")]
  */
-class RegisterController extends ControllerBase
+class RegisterController extends Ingbling\MVC\ControllerBase
 {
     /**
      * HomeController constructor.
