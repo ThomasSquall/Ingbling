@@ -5,7 +5,8 @@ class Ingbling
     private $defaults =
     [
         "settings" => [
-            "basedir" => "app"
+            "basedir" => "app",
+            "url" => "http://localhost/ingbling"
         ]
     ];
 
@@ -33,8 +34,8 @@ class Ingbling
     {
         if (SHOW_ERRORS)
         {
-            ini_set('display_errors', 1);
-            ini_set('display_startup_errors', 1);
+            ini_set("display_errors", 1);
+            ini_set("display_startup_errors", 1);
             error_reporting(E_ALL);
         }
 
@@ -43,9 +44,14 @@ class Ingbling
         if (defined(DBUSER) && DBUSER !== "")
             $connectionString .= DBUSER . "@";
 
-        $connectionString .= DBHOST . ':' . DBPORT . DBLOGIN . DBOPTIONS;
+        $connectionString .= DBHOST . ":" . DBPORT . DBLOGIN . DBOPTIONS;
 
         define("CONNECTION_STRING", $connectionString);
+        define("BASE_URL", $this->loadedSettings["url"]);
         define("APP_URL", BASE_URL . $this->loadedSettings["basedir"]);
+
+        define("PROJECT_DIR", dirname(__FILE__) . "/../");
+        define("APP_DIR", PROJECT_DIR . $this->loadedSettings["basedir"] . "/");
+        define("CORE_DIR", PROJECT_DIR . "core/");
     }
 }
