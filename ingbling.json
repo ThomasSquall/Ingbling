@@ -2,6 +2,15 @@
   "name": "thomas-squall/ingbling",
   "version": "1.0.0",
   "settings": {
-    "url": "http://localhost/ingbling/"
+    "basedir": "app",
+    "url": "http://localhost/ingbling/",
+    "errors": false
+  },
+  "db": {
+    "host": "localhost",
+    "port": 27017,
+    "name": "ingbling",
+    "user": "",
+    "password": ""
   }
 }

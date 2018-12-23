@@ -6,11 +6,20 @@ class Ingbling
     [
         "settings" => [
             "basedir" => "app",
-            "url" => "http://localhost/ingbling"
+            "url" => "http://localhost/ingbling",
+            "errors" => false
+        ],
+        "db" => [
+            "host" => "localhost",
+            "port" => 27017,
+            "name" => "ingbling",
+            "user" => "",
+            "password" => ""
         ]
     ];
 
     private $loadedSettings = [];
+    private $loadedDBSettings = [];
 
     public function execute()
     {
@@ -25,6 +34,7 @@ class Ingbling
 
         $content = parse_args($content, $this->defaults);
         $this->loadedSettings = $content["settings"];
+        $this->loadedDBSettings = $content["db"];
 
         unset($this->defaults);
         unset($content);
@@ -32,19 +42,27 @@ class Ingbling
 
     private function settingsSetup()
     {
-        if (SHOW_ERRORS)
+        $errors = $this->loadedSettings["errors"];
+
+        if ($errors === true || $errors === "true")
         {
             ini_set("display_errors", 1);
             ini_set("display_startup_errors", 1);
             error_reporting(E_ALL);
         }
 
+        define("DB_HOST", $this->loadedDBSettings["host"]);
+        define("DB_PORT", $this->loadedDBSettings["port"]);
+        define("DB_NAME", $this->loadedDBSettings["name"]);
+        define("DB_USER", $this->loadedDBSettings["user"]);
+        define("DB_PASSWORD", $this->loadedDBSettings["password"]);
+
         $connectionString = "mongodb://";
 
-        if (defined(DBUSER) && DBUSER !== "")
-            $connectionString .= DBUSER . "@";
+        if (DB_USER !== "" && DB_PASSWORD !== "")
+            $connectionString .= DB_USER . ":" . DB_PASSWORD . "@";
 
-        $connectionString .= DBHOST . ":" . DBPORT . DBLOGIN . DBOPTIONS;
+        $connectionString .= DB_HOST . ":" . DB_PORT;
 
         $url = $this->loadedSettings["url"];
         $basedir = $this->loadedSettings["basedir"];

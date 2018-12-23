@@ -18,7 +18,7 @@ class Database
     {
         $this->adapter = new Adapter();
         $this->adapter->connect(CONNECTION_STRING);
-        $this->adapter->selectDB(DBNAME);
+        $this->adapter->selectDB(DB_NAME);
 
         $this->init();
     }

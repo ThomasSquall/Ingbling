@@ -40,19 +40,20 @@ function create-config {
     echo "  \"name\": \"$1\"," >> "$file"
     echo "  \"version\": \"$2\"," >> "$file"
     echo "  \"settings\": {" >> "$file"
-
-    if [[ "" != $3 ]]; then
-        echo "    \"basedir\": \"$3\"," >> "$file"
-    fi;
-
+    echo "    \"basedir\": \"$3\"," >> "$file"
     echo "    \"url\": \"$4\"," >> "$file"
-
+    echo "    \"errors\": false," >> "$file"
+    echo "  }," >> "$file"
+    echo "  \"db\": {" >> "$file"
+    echo "    \"host\": \"$5\"," >> "$file"
+    echo "    \"port\": $6," >> "$file"
+    echo "    \"name\": \"$7\"," >> "$file"
+    echo "    \"user\": \"$8\"," >> "$file"
+    echo "    \"password\": \"$9\"" >> "$file"
     echo "  }" >> "$file"
     echo "}" >> "$file"
 
     cp config-sample.php config.php
-
-    sed -i "s@ingbling@$1@" defines.php
 
     mv .htaccess-sample .htaccess
     sed -i "s@ingbling@$1@" .htaccess
@@ -89,6 +90,10 @@ function init {
 
     read -p "Development directory (app): " basedir
 
+    if [[ "" = "$basedir" ]]; then
+        basedir="app"
+    fi;
+
     read -p "URL of your app: " url
 
     while [[ "" = "$url" ]]; do
@@ -96,11 +101,32 @@ function init {
         read -p "URL of your app: " url
     done;
 
+    read -p "Database host (localhost): " db_host
+    read -p "Database port (27017): " db_port
+    read -p "Database name ($name): " db_name
+
+    if [[ "" = "$db_name" ]]; then
+        db_name="$name"
+    fi;
+
+    read -p "Database user: " db_user
+    read -p "Database password: " db_password
+
+    while [[ "" != "$db_user" && "" = "$db_password" ]]; do
+        echo "Your password cannot be empty while a user has been defined"
+        read -p "Database password: " db_password
+    done;
+
     echo ""
     echo "Name: $name"
     echo "Version: $version"
     echo "Development directory: $basedir"
     echo "URL of the app: $url"
+    echo "Database host: $db_host"
+    echo "Database port: $db_port"
+    echo "Database name: $db_name"
+    echo "Database user: $db_user"
+    echo "Database password: $db_password"
     echo ""
 
     read -p "Is this configuration ok? " accept
@@ -108,7 +134,7 @@ function init {
     if [[ "" = "$accept" || "y" = "$accept" || "Y" = "$accept" || "yes" = "$accept" || "Yes" = "$accept" ]]; then
         install-repo "$name"
         install-dependencies
-        create-config "$name" "$version" "$basedir" "$url"
+        create-config "$name" "$version" "$basedir" "$url" "$db_host" "$db_port" "$db_name" "$db_user" "$db_password"
         basedir-config "$basedir"
     else
         read -p "You choose to abort, wanna start over? " restart
@@ -124,8 +150,6 @@ function generate {
         echo "Not an Ingbling project! Please use 'ingbling init' to start one."
         exit 1
     fi
-
-
 }
 
 function guide {
