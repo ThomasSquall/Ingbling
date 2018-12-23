@@ -5,4 +5,4 @@
     <input type="submit" value="Login">
 </form>
 
-Not a user yet?? Register <a href="<?php echo BASE_URL ?>register">here</a>
+Not a user yet?? Register <a href="register">here</a>

@@ -12,6 +12,6 @@ class LogoutController extends Ingbling\MVC\ControllerBase
     public function getIndex()
     {
         session_destroy();
-        header('Location: ' . BASE_URL . 'login');
+        $this->redirect("login");
     }
 }

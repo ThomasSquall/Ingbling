@@ -30,18 +30,18 @@ class LoginController extends Ingbling\MVC\ControllerBase
             $user,
             new MongoDriver\Filter
             (
-                'username',
-                $_POST['username'],
+                "username",
+                $_POST["username"],
                 MongoDriver\Filter::IS_EQUAL
             )
         );
 
-        if (User::verifyPassword($_POST['password'], $user->password))
+        if ($user !== false && User::verifyPassword($_POST["password"], $user->password))
         {
-            $_SESSION['username'] = $user->username;
-            header('Location: ' . BASE_URL);
+            $_SESSION["username"] = $user->username;
+            $this->redirect();
         }
 
-        header('Location: ' . BASE_URL . 'login');
+        $this->redirect("login");
     }
 }

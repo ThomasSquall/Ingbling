@@ -41,17 +41,71 @@ abstract class ControllerBase
             $template = strtolower($path) . $name . ".php";
 
             if (!file_exists($template))
-                throw new Exception("Template $name does not exist for controller $controller");
+                throw new \Exception("Template $name does not exist for controller $controller");
         }
 
         include $template;
     }
 
-    protected function requireHeaderScript($url) { $this->requires['HeaderScripts'][] = "app/assets/js/" . $url; }
-    protected function requireFooterScript($url) { $this->requires['FooterScripts'][] = "app/assets/js/" . $url; }
-    protected function requireStyle($url) { $this->requires['Styles'][] = "app/assets/css/" . $url; }
+    protected function redirect($uri = "")
+    {
+        if (!starts_with($uri, "http"))
+            $uri = BASE_URL . $uri;
 
-    public function getHeaderScripts() { return $this->requires['HeaderScripts']; }
-    public function getFooterScripts() { return $this->requires['FooterScripts']; }
-    public function getStyles() { return $this->requires['Styles']; }
+        header("Location: $uri");
+        exit();
+    }
+
+    protected function requireHeaderScript($script, $baseDir = "/assets/js/")
+    {
+        $this->cleanJS($script);
+        $this->cleanDir($baseDir);
+
+        $this->requires["HeaderScripts"][] = BASE_DIR . $baseDir . $script;
+    }
+
+    protected function requireFooterScript($script, $baseDir = "/assets/js/")
+    {
+        $this->cleanJS($script);
+        $this->cleanDir($baseDir);
+
+        $this->requires["FooterScripts"][] = BASE_DIR . $baseDir . $script;
+    }
+
+    protected function requireStyle($style, $baseDir = "/assets/css/")
+    {
+        $this->cleanCSS($style);
+        $this->cleanDir($baseDir);
+
+        $this->requires["Styles"][] = BASE_DIR . $baseDir . $style;
+    }
+
+    public function getHeaderScripts() { return $this->requires["HeaderScripts"]; }
+    public function getFooterScripts() { return $this->requires["FooterScripts"]; }
+    public function getStyles() { return $this->requires["Styles"]; }
+
+    private function cleanJS(&$script)
+    {
+        if (!ends_with($script, ".js"))
+            $script .= ".js";
+
+        $this->cleanDir($baseDir);
+    }
+
+    private function cleanCSS(&$style)
+    {
+        if (!ends_with($style, ".css"))
+            $style .= ".css";
+
+        $this->cleanDir($baseDir);
+    }
+
+    private function cleanDir(&$dir)
+    {
+        if (!ends_with($dir, "/"))
+            $dir .= "/";
+
+        if (!starts_with($dir, "/"))
+            $dir = "/" . $dir;
+    }
 }

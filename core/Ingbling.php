@@ -72,10 +72,11 @@ class Ingbling
 
         define("CONNECTION_STRING", $connectionString);
         define("BASE_URL", $url);
-        define("APP_URL", BASE_URL . $basedir);
+        define("BASE_DIR", $basedir);
+        define("APP_URL", BASE_URL . BASE_DIR);
 
         define("PROJECT_DIR", dirname(__FILE__) . "/../");
-        define("APP_DIR", PROJECT_DIR . $basedir);
+        define("APP_DIR", PROJECT_DIR . BASE_DIR);
         define("CORE_DIR", PROJECT_DIR . "core/");
     }
 }

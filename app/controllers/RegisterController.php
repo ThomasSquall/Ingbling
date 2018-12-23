@@ -23,12 +23,28 @@ class RegisterController extends Ingbling\MVC\ControllerBase
     {
         global $database;
 
-        $user = new User();
-        $user->username = $_POST['username'];
-        $user->password = User::hashPassword($_POST['password']);
+        $exist = new User();
+        $exist->username = $_POST["username"];
 
+        $database->findOne
+        (
+            $exist,
+            new MongoDriver\Filter
+            (
+                "username",
+                $_POST["username"],
+                MongoDriver\Filter::IS_EQUAL
+            )
+        );
+
+        if ($exist !== false)
+            $this->redirect("register");
+
+        $user = new User();
+        $user->username = $_POST["username"];
+        $user->password = User::hashPassword($_POST["password"]);
         $database->insert($user);
 
-        header('Location: ' . BASE_URL . 'login');
+        $this->redirect("login");
     }
 }

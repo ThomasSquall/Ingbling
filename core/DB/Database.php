@@ -58,7 +58,8 @@ class Database
     public function findOne(&$model, $filters = [], $options = [])
     {
         $collection = $this->getCollection($model);
-        $model = $this->adapter->findOne($collection, $filters, $options)[0];
+        $model = $this->adapter->findOne($collection, $filters, $options);
+        $model = count($model) == 0 ? false : $model[0];
     }
 
     public function find($class, $filters = [], $options = [])
