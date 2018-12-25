@@ -12,9 +12,15 @@ abstract class ControllerBase
         'Styles' => []
     ];
 
+    private $components = [];
+
     public final function __construct()
     {
         $this->Title = "";
+
+        foreach (glob(APP_DIR . "components/*.html") as $file)
+            $this->components[] = $file;
+
         $this->preInit();
         $this->init();
         $this->postInit();
@@ -44,7 +50,53 @@ abstract class ControllerBase
                 throw new \Exception("Template $name does not exist for controller $controller");
         }
 
+        ob_start();
         include $template;
+        $content = ob_get_clean();
+
+        $this->replaceComponents($content);
+
+        echo $content;
+    }
+
+    private function replaceComponents(&$content)
+    {
+        if (string_contains($content, "{{component: ") && string_contains($content, "}}"))
+        {
+            $components = strings_between($content, "{{component: ", "}}");
+
+            foreach ($components as $component)
+            {
+                $key = "{{component: " . trim($component) . "}}";
+                $name = $component;
+                $args = [];
+
+                if (string_contains($name, ","))
+                {
+                    $args = explode(",", $name);
+                    $name = $args[0];
+                    unset($args[0]);
+                }
+
+                $component = APP_DIR . "components/$name.html";
+
+                if (in_array($component, $this->components))
+                {
+                    $component = file_get_contents($component);
+
+                    foreach ($args as $arg)
+                    {
+                        if (!string_contains($arg, ":"))
+                            continue;
+
+                        $value = explode(":", $arg);
+                        $component = replace_tokens($component, ["{{" . trim($value[0]) . "}}" => trim($value[1])]);
+                    }
+
+                    $content = replace_tokens($content, [$key => $component]);
+                }
+            }
+        }
     }
 
     protected function redirect($uri = "")

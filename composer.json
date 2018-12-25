@@ -1,6 +1,7 @@
 {
     "name": "thomas-squall/ingbling",
     "description": "Ingbling, site builder",
+    "version": "0.5.0",
     "minimum-stability": "stable",
     "type": "project",
     "license": "MIT",
