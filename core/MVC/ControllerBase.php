@@ -90,10 +90,10 @@ abstract class ControllerBase
                             continue;
 
                         $value = explode(":", $arg);
-                        $component = replace_tokens($component, ["{{" . trim($value[0]) . "}}" => trim($value[1])]);
+                        $component = str_replace("{{" . trim($value[0]) . "}}", trim($value[1]), $component);
                     }
 
-                    $content = replace_tokens($content, [$key => $component]);
+                    $content = str_replace($key, $component, $content);
                 }
             }
         }
@@ -101,7 +101,7 @@ abstract class ControllerBase
 
     protected function redirect($uri = "")
     {
-        if (!starts_with($uri, "http"))
+        if (!string_starts_with($uri, "http"))
             $uri = BASE_URL . $uri;
 
         header("Location: $uri");
@@ -138,7 +138,7 @@ abstract class ControllerBase
 
     private function cleanJS(&$script)
     {
-        if (!ends_with($script, ".js"))
+        if (!string_ends_with($script, ".js"))
             $script .= ".js";
 
         $this->cleanDir($baseDir);
@@ -146,7 +146,7 @@ abstract class ControllerBase
 
     private function cleanCSS(&$style)
     {
-        if (!ends_with($style, ".css"))
+        if (!string_ends_with($style, ".css"))
             $style .= ".css";
 
         $this->cleanDir($baseDir);
@@ -154,10 +154,10 @@ abstract class ControllerBase
 
     private function cleanDir(&$dir)
     {
-        if (!ends_with($dir, "/"))
+        if (!string_ends_with($dir, "/"))
             $dir .= "/";
 
-        if (!starts_with($dir, "/"))
+        if (!string_starts_with($dir, "/"))
             $dir = "/" . $dir;
     }
 }

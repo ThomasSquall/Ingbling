@@ -67,8 +67,8 @@ class Ingbling
         $url = $this->loadedSettings["url"];
         $basedir = $this->loadedSettings["basedir"];
 
-        if (!ends_with($url, "/")) $url .= "/";
-        if (!ends_with($basedir, "/")) $basedir .= "/";
+        if (!string_ends_with($url, "/")) $url .= "/";
+        if (!string_ends_with($basedir, "/")) $basedir .= "/";
 
         define("CONNECTION_STRING", $connectionString);
         define("BASE_URL", $url);
