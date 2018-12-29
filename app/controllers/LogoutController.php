@@ -2,12 +2,12 @@
 
 /**
  * Class LogoutController.
- * [\PHPEasyAPI\Server("logout")]
+ * @PHPEasyAPI\Server("logout")
  */
 class LogoutController extends Ingbling\MVC\ControllerBase
 {
     /**
-     * [\PHPEasyAPI\Enrichment\Endpoint(method = "GET", url = "")]
+     * @PHPEasyAPI\Enrichment\Endpoint(method = "GET", url = "")
      */
     public function getIndex()
     {

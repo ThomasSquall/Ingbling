@@ -2,7 +2,7 @@
 
 /**
  * Class User.
- * [\MongoDriver\Models\Model(name = "users")]
+ * @MongoDriver\Models\Model(name = "users")
  */
 class User
 {

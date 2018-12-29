@@ -2,7 +2,7 @@
 
 /**
  * Class RegisterController.
- * [\PHPEasyAPI\Server("register")]
+ * @PHPEasyAPI\Server("register")
  */
 class RegisterController extends Ingbling\MVC\ControllerBase
 {
@@ -12,12 +12,12 @@ class RegisterController extends Ingbling\MVC\ControllerBase
     public function init() { $this->Title = "Register"; }
 
     /**
-     * [\PHPEasyAPI\Enrichment\Endpoint(method = "GET", url = "")]
+     * @PHPEasyAPI\Enrichment\Endpoint(method = "GET", url = "")
      */
     public function getIndex() { $this->render(); }
 
     /**
-     * [\PHPEasyAPI\Enrichment\Endpoint(method = "POST", url = "")]
+     * @PHPEasyAPI\Enrichment\Endpoint(method = "POST", url = "")
      */
     public function postIndex()
     {

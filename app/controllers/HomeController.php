@@ -2,7 +2,7 @@
 
 /**
  * Class HomeController.
- * [\PHPEasyAPI\Server]
+ * @PHPEasyAPI\Server
  */
 class HomeController extends Ingbling\MVC\ControllerBase
 {
@@ -12,7 +12,7 @@ class HomeController extends Ingbling\MVC\ControllerBase
     public function init() { $this->Title = "Home"; }
 
     /**
-     * [\PHPEasyAPI\Enrichment\Endpoint(method = "GET", url = "")]
+     * @PHPEasyAPI\Enrichment\Endpoint(method = "GET", url = "")
      */
     public function getIndex() { $this->render(); }
 }

@@ -2,7 +2,7 @@
 
 /**
  * Class LoginController.
- * [\PHPEasyAPI\Server("login")]
+ * @PHPEasyAPI\Server("login")
  */
 class LoginController extends Ingbling\MVC\ControllerBase
 {
@@ -12,12 +12,12 @@ class LoginController extends Ingbling\MVC\ControllerBase
     public function init() { $this->Title = "Login"; }
 
     /**
-     * [\PHPEasyAPI\Enrichment\Endpoint(method = "GET", url = "")]
+     * @PHPEasyAPI\Enrichment\Endpoint(method = "GET", url = "")
      */
     public function getIndex() { $this->render(); }
 
     /**
-     * [\PHPEasyAPI\Enrichment\Endpoint(method = "POST", url = "")]
+     * @PHPEasyAPI\Enrichment\Endpoint(method = "POST", url = "")
      */
     public function postIndex()
     {
