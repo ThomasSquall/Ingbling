@@ -178,9 +178,9 @@ function generate-controller {
     controller="$controller"$'\n * Class '"$cName."
 
     if [[ "home" = "$name" ]]; then
-        controller="$controller"$'\n * [\PHPEasyAPI\Server]'
+        controller="$controller"$'\n *  @PHPEasyAPI\Server'
     else
-        controller="$controller"$'\n * [\PHPEasyAPI\Server("'"$name"'")]'
+        controller="$controller"$'\n * @PHPEasyAPI\Server("'"$name"'")'
     fi
 
     controller="$controller"$'\n */'
@@ -193,7 +193,7 @@ function generate-controller {
     controller="$controller"$'\n'
     controller="$controller"$'\n    /**'
     controller="$controller"$'\n     * Renders the main page of the controller.'
-    controller="$controller"$'\n'"     * [\PHPEasyAPI\Enrichment\Endpoint"'(method = "GET", url = "")]'
+    controller="$controller"$'\n'"     * @PHPEasyAPI\Enrichment\Endpoint"'(method = "GET", url = "")'
     controller="$controller"$'\n     */'
     controller="$controller"$'\n    public function getIndex() { $this->render(); }'
     controller="$controller"$'\n}'
