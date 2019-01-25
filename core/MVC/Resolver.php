@@ -25,5 +25,5 @@ class Resolver
         }
     }
 
-    public function resolve($callback) { $this->resolver->resolve($callback); }
+    public function resolve($callback = null) { $this->resolver->resolve($callback); }
 }

@@ -14,6 +14,7 @@
     "require": {
         "thomas-squall/php7-mongo-driver": "^0.7.0",
         "thomas-squall/php-easy-api": "^0.6.1",
-        "thomas-squall/string-utils": "^0.5.5"
+        "thomas-squall/utils": "^0.5.0",
+        "filp/whoops": "^2.3",
     }
 }

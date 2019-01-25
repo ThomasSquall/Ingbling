@@ -4,7 +4,7 @@
   "settings": {
     "basedir": "app",
     "url": "http://localhost/ingbling/",
-    "errors": false
+    "errors": true
   },
   "db": {
     "host": "localhost",
