@@ -1,5 +1,5 @@
 {
-    "name": "thomas-squall/ingbling",
+    "name": "thomas-squall/ingbling-project",
     "description": "Ingbling, site builder",
     "version": "0.5.2",
     "minimum-stability": "stable",
@@ -13,8 +13,9 @@
     ],
     "require": {
         "thomas-squall/php7-mongo-driver": "^0.7.0",
-        "thomas-squall/php-easy-api": "^0.6.1",
+        "thomas-squall/php-easy-api": "^0.6.2",
         "thomas-squall/utils": "^0.5.0",
         "filp/whoops": "^2.3",
+        "ext-json": "*"
     }
 }

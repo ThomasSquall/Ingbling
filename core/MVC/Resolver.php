@@ -9,12 +9,35 @@ class Resolver
      */
     private $resolver;
 
+    /**
+     * @var array $middlewares
+     */
+    private $middlewares;
+
     public function __construct()
     {
         $this->resolver = new \PHPEasyAPI\Resolver();
-
         $this->resolver->setBaseUrl(BASE_URL);
+        $this->middlewares = [];
 
+        $this->registerControllers();
+        $this->registerMiddlewares();
+    }
+
+    public function resolve()
+    {
+        $this->resolver->resolve
+        (
+            function($endpoint)
+            {
+                foreach ($this->middlewares as $middleware)
+                    $middleware->resolve($endpoint);
+            }
+        );
+    }
+
+    private function registerControllers()
+    {
         foreach (glob(APP_DIR . "controllers/*Controller.php") as $file)
         {
             require_once $file;
@@ -25,5 +48,15 @@ class Resolver
         }
     }
 
-    public function resolve($callback = null) { $this->resolver->resolve($callback); }
+    private function registerMiddlewares()
+    {
+        foreach (glob(APP_DIR . "middlewares/*Middleware.php") as $file)
+        {
+            require_once $file;
+
+            $files = explode('/', $file);
+            $middleware = explode(".php", $files[count($files) - 1])[0];
+            $this->middlewares[] = new $middleware();
+        }
+    }
 }
