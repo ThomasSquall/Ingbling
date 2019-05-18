@@ -38,6 +38,24 @@ class Resolver
 
     private function registerControllers()
     {
+        $this->registerExtensionsControllers();
+        $this->registerUserDefinedControllers();
+    }
+
+    private function registerExtensionsControllers()
+    {
+        foreach (glob(EXTS_DIR . "**/controllers/*Controller.php") as $file)
+        {
+            require_once $file;
+
+            $files = explode('/', $file);
+            $controller = explode(".php", $files[count($files) - 1])[0];
+            $this->resolver->bindListener(new $controller());
+        }
+    }
+
+    private function registerUserDefinedControllers()
+    {
         foreach (glob(APP_DIR . "controllers/*Controller.php") as $file)
         {
             require_once $file;
@@ -49,6 +67,24 @@ class Resolver
     }
 
     private function registerMiddlewares()
+    {
+        $this->registerExtensionsMiddlewares();
+        $this->registerUserDefinedMiddlewares();
+    }
+
+    private function registerExtensionsMiddlewares()
+    {
+        foreach (glob(EXTS_DIR . "**/middlewares/*Middleware.php") as $file)
+        {
+            require_once $file;
+
+            $files = explode('/', $file);
+            $middleware = explode(".php", $files[count($files) - 1])[0];
+            $this->middlewares[] = new $middleware();
+        }
+    }
+
+    private function registerUserDefinedMiddlewares()
     {
         foreach (glob(APP_DIR . "middlewares/*Middleware.php") as $file)
         {

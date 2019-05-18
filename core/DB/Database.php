@@ -25,6 +25,24 @@ class Database
 
     private function init()
     {
+        $this->initExtensions();
+        $this->initUserDefined();
+    }
+
+    private function initExtensions()
+    {
+        foreach (glob(EXTS_DIR . "**/collections/*.php") as $file)
+        {
+            require_once $file;
+
+            $files = explode('/', $file);
+            $model = explode(".php", $files[count($files) - 1])[0];
+            $this->adapter->registerModel(new $model());
+        }
+    }
+
+    private function initUserDefined()
+    {
         foreach (glob(APP_DIR . "collections/*.php") as $file)
         {
             require_once $file;

@@ -104,7 +104,7 @@ This is the annotation:
  
 This annotation tells the framework that the class will write and read to the mongo collection called users. This annotation is required for all your collections/models.
 
-Now to add a User you just only have to do the following:
+Now, to add a User, you just have to do the following:
 
 ``` php
 function register()

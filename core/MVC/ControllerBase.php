@@ -18,8 +18,8 @@ abstract class ControllerBase
     {
         $this->Title = "";
 
-        foreach (glob(APP_DIR . "components/*.html") as $file)
-            $this->components[] = $file;
+        $this->registerExtensionsComponents();
+        $this->registerUserDefinedComponents();
 
         $this->preInit();
         $this->init();
@@ -38,17 +38,13 @@ abstract class ControllerBase
     protected function addTemplate($name)
     {
         $controller = get_class($this);
-        $path = APP_DIR . "templates/" . explode("Controller", $controller)[0] . "/";
+        $path = APP_DIR . "templates/" .
+            explode("Controller", $controller)[0] . "/";
+
         $template = strtolower($path) . $name . ".php";
 
         if (!file_exists($template))
-        {
-            $path = APP_DIR . "templates/default/";
-            $template = strtolower($path) . $name . ".php";
-
-            if (!file_exists($template))
-                throw new \Exception("Template $name does not exist for controller $controller");
-        }
+            $template = $this->addExtensionsTemplate($controller, $name);
 
         ob_start();
         include $template;
@@ -57,6 +53,64 @@ abstract class ControllerBase
         $this->replaceComponents($content);
 
         echo $content;
+    }
+
+    private function addExtensionsTemplate($controller, $name)
+    {
+        $extensions = array_filter(glob(EXTS_DIR . "*"), 'is_dir');
+        $found = false;
+
+        foreach ($extensions as $extension)
+        {
+            $path = $extension . "/templates/" .
+                explode("Controller", $controller)[0] . "/";
+
+            $template = strtolower($path) . $name . ".php";
+
+            if (!file_exists($template))
+                continue;
+
+            $found = true;
+            break;
+        }
+
+        if (!$found)
+            $template = $this->addDefaultTemplate($name);
+
+        return $template;
+    }
+
+    private function addDefaultTemplate($name)
+    {
+        $path = APP_DIR . "templates/default/";
+        $template = strtolower($path) . $name . ".php";
+
+        if (!file_exists($template))
+            throw new \Exception("Template $name does not exist for controller $controller");
+
+        return $template;
+    }
+
+    private function registerExtensionsComponents()
+    {
+        foreach (glob(EXTS_DIR . "**/components/*.html") as $file)
+        {
+            $name = explode("/", $file);
+            $name = $name[count($name) - 1];
+            $name = str_replace(".html", "", $name);
+            $this->components[$name] = $file;
+        }
+    }
+
+    private function registerUserDefinedComponents()
+    {
+        foreach (glob(APP_DIR . "components/*.html") as $file)
+        {
+            $name = explode("/", $file);
+            $name = $name[count($name) - 1];
+            $name = str_replace(".html", "", $name);
+            $this->components[$name] = $file;
+        }
     }
 
     private function replaceComponents(&$content)
@@ -78,11 +132,9 @@ abstract class ControllerBase
                     unset($args[0]);
                 }
 
-                $component = APP_DIR . "components/$name.html";
-
-                if (in_array($component, $this->components))
+                if (isset($this->components[$name]))
                 {
-                    $component = file_get_contents($component);
+                    $component = file_get_contents($this->components[$name]);
 
                     foreach ($args as $arg)
                     {

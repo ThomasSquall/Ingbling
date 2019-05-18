@@ -82,5 +82,6 @@ class Ingbling
         define("PROJECT_DIR", dirname(__FILE__) . "/../");
         define("APP_DIR", PROJECT_DIR . BASE_DIR);
         define("CORE_DIR", PROJECT_DIR . "core/");
+        define("EXTS_DIR", PROJECT_DIR .  "extensions/");
     }
 }
