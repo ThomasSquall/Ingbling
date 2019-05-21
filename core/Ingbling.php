@@ -29,7 +29,7 @@ class Ingbling
 
     private function loadSettings()
     {
-        $content = file_get_contents("ingbling.json");
+        $content = file_get_contents("../ingbling.json");
         $content = json_decode($content, true);
 
         $content = parse_args($content, $this->defaults);
