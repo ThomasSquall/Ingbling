@@ -43,13 +43,15 @@ You essentially will work in the app folder.
 This folder is divided in 4 important sub-folders:
 - assets folder: This folder contains js, css & img folders by default which are used by the core to find Javascripts, CSS and Images files.
 - collections folder: This folder contains all your Mongo models/collections.
-- controllers folder: This folder contains all your Controllers, one per page.
-- middlewares folder: This folder contains all your Middlewarew. They will be called in order per each URL.
+- controllers folder: This folder contains all your Controllers.
+- middlewares folder: This folder contains all your Middleware. They will be called in order per each URL.
 - templates folder: This folder contains all your templates.
 
 ### Collections
 
 All the collections/models should be put in this folder. In the project you will find an example: let's analyze it!
+
+PS: This file has been moved to extensions/Basic/collections folder.
 
 ``` php
 <?php

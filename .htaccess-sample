@@ -6,3 +6,7 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule . /ingbling/index.php [L]
 </IfModule>
+
+<Files "ingbling.json">
+  Require all denied
+</Files>
